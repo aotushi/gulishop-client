@@ -9,6 +9,31 @@ import Register from '@/pages/Register';
 import Search from '@/pages/Search';
 Vue.use(VueRouter);
 
+//将原有的push方法地址,保存起来,后期还能拿到原来的
+const originPush=VueRouter.prototype.push;
+const originReplace=VueRouter.prototype.replace;
+
+//修改原型的push,让原型的push指向另一个函数
+VueRouter.prototype.push=function(location,onResolve,onRejected){
+    //接收3个参数: location就是调用this.$router.push传递过来的对象, 成功和失败的回调
+
+    //判断
+    if(onResolve === undefined && onRejected === undefined){
+        //调用的时候只传递了个匹配路由器对象,没有传递成功和失败的回调 this是实例化对象? 不传会绑定window
+        return originPush.call(this, location).catch(()=>{})
+    }else{
+        return originPush.call(this, location, onResolve, onRejected);
+    }
+}
+
+VueRouter.prototype.replace=function(location,onResolve,onRejected){
+    if(onResolve === undefined && onRejected === undefined){
+        return originReplace.call(this, location).catch(()=>{})
+    }else{
+        return originReplace.call(this, location, onResolve, onRejected);
+    }
+}
+
 const router=new VueRouter({
     routes:[
         {
@@ -16,12 +41,19 @@ const router=new VueRouter({
             component:Home
         },
         {
-            path:'/search',
-            component:Search
+            name:'search',
+            path:'/search/:keyWord',
+            component:Search,
+            meta:{
+                isHidden:true
+            }
         },
         {
             path:'/login',
-            component:Login
+            component:Login,
+            meta:{
+                isHidden:true
+            }
         },
         {
             path:'/register',

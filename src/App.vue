@@ -2,7 +2,9 @@
   <div>
     <Header/>
     <router-view></router-view>
-    <Footer/>
+    <!-- <Footer v-show="$route.path !== '/login' && $route.path!=='/search'"/> -->
+    <!-- <Footer v-show="!$route.meta.isHidden"/> -->
+    <Footer v-show="!$route.matched[0].meta.isHidden"/>
   </div>
 </template>
 
@@ -11,7 +13,10 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 export default {
   name:'App',
-  components:{Footer, Header}
+  components:{Footer, Header},
+  // mounted(){
+  //   // console.log(this)
+  // }
 }
 </script>
 

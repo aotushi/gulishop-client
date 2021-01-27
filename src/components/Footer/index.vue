@@ -108,6 +108,7 @@
 <script>
 export default {
     name: "Footer",
+    // mounted(){console.log(this)}
 };
 </script>
 

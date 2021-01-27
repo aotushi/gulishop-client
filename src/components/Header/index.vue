@@ -8,8 +8,10 @@
                     <p>尚品汇欢迎您！</p>
                     <p>
                         <span>请</span>
-                        <router-link to='/login'>登录</router-link>
-                        <router-link to='/register' class="register">免费注册</router-link>
+                        <router-link to="/login">登录</router-link>
+                        <router-link to="/register" class="register"
+                            >免费注册</router-link
+                        >
                     </p>
                 </div>
                 <div class="typeList">
@@ -28,7 +30,12 @@
         <div class="bottom">
             <h1 class="logoArea">
                 <!-- <a class="logo" title="尚品汇" href="###" target="_blank"> -->
-                <router-link class="logo" title="尚品汇" to="/home" target="_blank">
+                <router-link
+                    class="logo"
+                    title="尚品汇"
+                    to="/home"
+                    target="_blank"
+                >
                     <img src="./images/logo.png" alt="" />
                 </router-link>
             </h1>
@@ -38,8 +45,13 @@
                         type="text"
                         id="autocomplete"
                         class="input-error input-xxlarge"
+                        v-model="keyWord"
                     />
-                    <button class="sui-btn btn-xlarge btn-danger" type="button" @click='toSearch'>
+                    <button
+                        class="sui-btn btn-xlarge btn-danger"
+                        type="button"
+                        @click="toSearch"
+                    >
                         搜索
                     </button>
                 </form>
@@ -51,10 +63,25 @@
 <script>
 export default {
     name: "Header",
-    methods:{
-        toSearch(){
-            this.$router.push('/search')
-        }
+    data() {
+        return {
+            keyWord: "",
+        };
+    },
+    methods: {
+        toSearch() {
+            // this.$router.push("/search/" + this.keyWord + '?'+'keyWord1='+this.keyWord.toUpperCase());
+            //NavigationDuplicated的警告错误
+            //解决 1.传入成功和失败的回调  2.push方法调用catch方法,push().catch(()=>{}) 推荐写法  3.
+            this.$router.push({
+                name:'search',
+                params:{keyword:this.keyWord || undefined},
+                query:{keyword1:this.keyWord.toUpperCase()},
+            })  
+        },
+    },
+    mounted(){
+        // console.log(this)
     }
 };
 </script>
