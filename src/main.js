@@ -2,7 +2,7 @@ import Vue from 'vue';
 // import App from './App.vue';
 import App from '@/App';
 import router from '@/router';
-import TypeNav from '@/components/TypeNva';
+import TypeNav from '@/components/TypeNav';
 import store from '@/store';
 // import '@/api';
 
