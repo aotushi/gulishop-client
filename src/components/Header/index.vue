@@ -72,16 +72,21 @@ export default {
         toSearch() {
             // this.$router.push("/search/" + this.keyWord + '?'+'keyWord1='+this.keyWord.toUpperCase());
             //NavigationDuplicated的警告错误
-            //解决 1.传入成功和失败的回调  2.push方法调用catch方法,push().catch(()=>{}) 推荐写法  3.
-            this.$router.push({
+            //解决 1.传入成功和失败的回调  2.push方法调用catch方法,push().catch(()=>{}) 推荐写法  3.重写push与replace方法
+
+            let location={
                 name:'search',
-                params:{keyword:this.keyWord || undefined},
-                query:{keyword1:this.keyWord.toUpperCase()},
-            })  
+                params:{keyword:this.keyWord || "00"}
+                // query:{keyword1:this.keyWord.toUpperCase()},
+            };
+            if(this.$route.query){
+                location.query=this.$route.query;
+            }
+            this.$router.push(location);
+            }
         },
-    },
     mounted(){
-        // console.log(this)
+        console.log(this)
     }
 };
 </script>

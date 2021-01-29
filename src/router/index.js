@@ -42,17 +42,17 @@ const router=new VueRouter({
         },
         {
             name:'search',
-            path:'/search/:keyWord',
+            path:'/search/:keyword?',
             component:Search,
             meta:{
-                isHidden:true
+                isHidden:false
             }
         },
         {
             path:'/login',
             component:Login,
             meta:{
-                isHidden:true
+                isHidden:false
             }
         },
         {
