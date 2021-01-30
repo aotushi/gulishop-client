@@ -1,10 +1,12 @@
 //home模块对应的vuex模块
 
-import {reqCategoryList} from '@/api';
+import {reqCategoryList, reqBannerList, reqFloorList} from '@/api';
 
 const state={
     //存数据
-    categoryList:[]
+    categoryList:[],
+    bannerList:[],
+    floorList:[]
 };
 
 const actions={
@@ -15,14 +17,33 @@ const actions={
         if(result.code === 200){
             commit('RECEIVE_CATEGORY', result.data);
         }
+    },
+
+    async getBannerList({commit}){  
+        const result = await reqBannerList();
+        if(result.code === 200){
+            commit('RECEIVE_BANNERLIST', result.data);
+        }
+    },
+
+    async getFloorList({commit}){
+        const result = await reqFloorList();
+        if(result.code === 200){
+            commit('RECEIVE_FLOORLIST', result.data);
+        }
     }
 };
 
 const mutations={
-    //直接修改数据
     RECEIVE_CATEGORY(state, categoryList){
         state.categoryList=categoryList;
-    }
+    },
+    RECEIVE_BANNERLIST(state, bannerList){
+        state.bannerList=bannerList;
+    },
+    RECEIVE_FLOORLIST(state, floorList){
+        state.floorList=floorList;
+    },
 };
 
 const getters={

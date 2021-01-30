@@ -4,6 +4,7 @@ import App from '@/App';
 import router from '@/router';
 import TypeNav from '@/components/TypeNav';
 import store from '@/store';
+import '@/mock/mockServer';  //引入mock接口
 // import '@/api';
 
 //全局注册组件: 如果一个非路由组件被多个组件使用,那么定义在components,注册在全局
