@@ -3,29 +3,7 @@
     <div class="list-container">
         <div class="sortList clearfix">
             <div class="center">
-                <!--banner轮播-->
-                <div class="swiper-container" id="mySwiper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" v-for="(banner, index) in bannerList" :key="banner.id">
-                            <img :src="banner.imgUrl" />
-                        </div>
-                        <!-- <div class="swiper-slide">
-                            <img src="./images/banner2.jpg" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./images/banner3.jpg" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./images/banner4.jpg" />
-                        </div> -->
-                    </div>
-                    <!-- 如果需要分页器 -->
-                    <div class="swiper-pagination"></div>
-
-                    <!-- 如果需要导航按钮 -->
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
-                </div>
+                <SlideLoop :bannerList="bannerList"/>
             </div>
             <div class="right">
                 <div class="news">
@@ -116,17 +94,27 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
+
+import SlideLoop from '@/components/SlideLoop';
+// import 'swiper/css/swiper.css';//一般直接在main中引入
 export default {
-    name:'ListContainer',
-    mounted(){
-        this.$store.dispatch('getBannerList')
+    name: "ListContainer",
+    components:{SlideLoop},
+    mounted() {
+        console.log(this);
+        // this.$store.dispatch("getBannerList");
+
+        // 挂载完成后实例化swiper 但效果还是有问题.这个页面当中的swiper-slider是根据请求回来的数据,动态创建生成的.所以必要保证请求数据回来之后,再去实例化React.Component
+        // dispatch是异步任务, swiper是同步代码,会首先执行.相当于在结构形成之前已经实例化了React.Component
+        // 解决方法: 最简单-定时器; 但同时页面上多个组件的轮播图都生效了,因为多个组件中的轮播图样式class名称都相同. 解决:ref. this.$refs.xxx
     },
-    computed:{
+
+    computed: {
         ...mapState({
-            bannerList:state=>state.home.bannerList
-        })
-    }
+            bannerList: (state) => state.home.bannerList,
+        }),
+    },
 };
 </script>
 

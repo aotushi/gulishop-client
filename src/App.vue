@@ -16,7 +16,8 @@ export default {
   components:{Footer, Header},
   mounted(){
     // 请求三级分类的数据
-    this.$store.dispatch('getCategoryList')
+    this.$store.dispatch('getCategoryList');
+    this.$store.dispatch("getBannerList");
 }
 }
 </script>
