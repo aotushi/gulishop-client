@@ -45,7 +45,7 @@
                         type="text"
                         id="autocomplete"
                         class="input-error input-xxlarge"
-                        v-model="keyWord"
+                        v-model="keyword"
                     />
                     <button
                         class="sui-btn btn-xlarge btn-danger"
@@ -65,28 +65,33 @@ export default {
     name: "Header",
     data() {
         return {
-            keyWord: "",
+            keyword: "",
         };
     },
     methods: {
         toSearch() {
-            // this.$router.push("/search/" + this.keyWord + '?'+'keyWord1='+this.keyWord.toUpperCase());
+            // this.$router.push("/search/" + this.keyword + '?'+'keyword1='+this.keyword.toUpperCase());
             //NavigationDuplicated的警告错误
             //解决 1.传入成功和失败的回调  2.push方法调用catch方法,push().catch(()=>{}) 推荐写法  3.重写push与replace方法
 
             let location={
                 name:'search',
-                params:{keyword:this.keyWord || "00"}
-                // query:{keyword1:this.keyWord.toUpperCase()},
+                params:{keyword:this.keyword||undefined}
+                // query:{keyword1:this.keyword.toUpperCase()},
             };
             if(this.$route.query){
                 location.query=this.$route.query;
             }
             this.$router.push(location);
+            },
+
+            clearKeyword(){
+                this.keyword=""
             }
         },
     mounted(){
         // console.log(this)
+        this.$bus.$on('clearKeyword', this.clearKeyword)
     }
 };
 </script>

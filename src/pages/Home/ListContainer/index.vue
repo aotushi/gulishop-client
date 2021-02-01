@@ -96,20 +96,17 @@
 <script>
 import { mapState } from "vuex";
 // import Swiper from 'swiper';
-import SlideLoop from "@/components/SlideLoop";
+// import SlideLoop from "@/components/SlideLoop";
 // import 'swiper/css/swiper.css';//一般直接在main中引入
 export default {
     name: "ListContainer",
-    components:{SlideLoop},
+    // components:{SlideLoop},
     mounted() {
-        console.log(this);
         this.$store.dispatch("getBannerList");
 
         // 挂载完成后实例化swiper 但效果还是有问题.这个页面当中的swiper-slider是根据请求回来的数据,动态创建生成的.所以必要保证请求数据回来之后,再去实例化React.Component
         // dispatch是异步任务, swiper是同步代码,会首先执行.相当于在结构形成之前已经实例化了React.Component
         // 解决方法: 最简单-定时器; 但同时页面上多个组件的轮播图都生效了,因为多个组件中的轮播图样式class名称都相同. 解决:ref. this.$refs.xxx
-
-        console.log(typeof this)
     },
 
     computed: {

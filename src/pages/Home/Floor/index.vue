@@ -68,11 +68,11 @@
 </template>
 
 <script>
-import SlideLoop from '@/components/SlideLoop';
+// import SlideLoop from '@/components/SlideLoop';
 export default {
     name: "Floor",
     props: ["floor"],
-    components:{SlideLoop}
+    // components:{SlideLoop}
 };
 </script>
 
