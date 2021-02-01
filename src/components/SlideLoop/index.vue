@@ -25,7 +25,7 @@ export default {
     props:['bannerList'],
     watch: {
         // 为了实现不同组件里相同资源的组件化,需要将组件里的html+css+js变得一致. 所以floor组件中需要放弃最简单的mounted.改用与listcontainer组件中相同的watch.
-        // floor里的监视是监视不到数据变化的,因为数据通过props早已经过来了.而listContainer是可以见到0-4的变化过程,而这里总是3-3的
+        // floor里的监视是监视不到数据变化的,因为数据通过props早已经过来了.而listContainer是可以见到0-4的变化过程,而这里总是3-3的. 所以使用immediate.
         // 当数据发生变化,就去实例化swiper.,但还是不行
         // 所以,页面还是没完整形成. 使用nextTick方法
         bannerList: {

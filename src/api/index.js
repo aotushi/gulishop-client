@@ -26,3 +26,27 @@ export const reqFloorList=()=>{
         method:'get'
     })
 }
+
+
+// 请求获取search页面的动态数据 /api/list post
+// 请求体参数,默认是一个空对象
+
+// {
+//     "category3Id": "61",
+//     "categoryName": "手机",
+//     "keyword": "小米",
+//     "order": "1:desc",
+//     "pageNo": 1,
+//     "pageSize": 10,
+//     "props": ["1:1700-2799:价格", "2:6.65-6.74英寸:屏幕尺寸"],
+//     "trademark": "4:小米"
+//   }
+  
+export const reqSearchInfo=(searchParams)=>{
+    return request({
+        url:'/list',
+        method:'post',
+        data:searchParams //用户搜索的参数,必须是一个对象,可以是空对象但必须传. 是用户发请求的时候给传递的
+    })
+}
+// reqSearchInfo();

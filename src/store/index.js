@@ -4,6 +4,7 @@ Vue.use(Vuex);
 
 import home from './home';
 import user from './user';
+import search from './search';
 
 const state={
     //存数据
@@ -31,7 +32,8 @@ const store=new Vuex.Store({
     getters,
     modules:{ //modules代表模块化
         home,
-        user
+        user,
+        search
     }
 });
 
