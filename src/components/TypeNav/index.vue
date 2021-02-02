@@ -183,9 +183,15 @@ export default {
                     location.params=this.$route.params;
                 }
 
+                // 判断当前path等不等于home, 使用replace. 实现搜索页点击返回按钮直接返回
+                if(this.$route.path!=='/home'){
+                    this.$router.replace(location);
+                }else{
+                    // 编程式路由导航
+                    this.$router.push(location);
+                }
 
-                // 编程式路由导航
-                this.$router.push(location);
+                
             }
         },
         moveOutDiv(){

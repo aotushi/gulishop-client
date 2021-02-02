@@ -73,6 +73,9 @@ export default {
     name: "Floor",
     props: ["floor"],
     // components:{SlideLoop}
+    mounted(){
+        console.log('floor组件挂载了')
+    }
 };
 </script>
 

@@ -13,7 +13,7 @@
           <ul class="fl sui-tag">
             <li class="with-x" v-if="searchParams.categoryName">{{searchParams.categoryName}}<i @click="removeCategoryName">×</i></li>
             <li class="with-x" v-if="searchParams.keyword">{{searchParams.keyword}}<i @click="removeKeyWord">×</i></li>
-            <li class="with-x" v-if="searchParams.trademark">{{searchParams.trademark.split(':')[1]}}<i @click="removeTrademark(trademark)">×</i></li>
+            <li class="with-x" v-if="searchParams.trademark">{{searchParams.trademark.split(':')[1]}}<i @click="removeTrademark">×</i></li>
             <li class="with-x" v-for="(prop, index) in searchParams.props" :key="prop">{{prop.split(':')[1]}}<i @click="removeProp(index)">×</i></li>
           </ul>
         </div>
@@ -26,23 +26,18 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <!-- <li :class="{active:searchParams.order.split(':')[0] ==='1'}"> -->
+                <li :class="{active:sortFlag ==='1'}">
+                  <a href="javascript:;" @click="changeSort('1')">
+                    综合
+                    <i v-if="sortFlag " class="iconfont" :class="{icondown: sortType ==='desc', iconup:sortType==='asc' }"></i>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="{active:sortFlag ==='2'}" >
+                  <a href="javascript:;" @click="changeSort('2')">
+                    价格
+                    <i v-if="sortFlag==='2' " class="iconfont"  :class="{ icondown:sortType ==='desc', iconup:sortType ==='asc' }"></i>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -147,10 +142,10 @@ export default {
         categoryName: "",
         keyword: "",
         props: [],
-        trademark: "",
+        trademark:"",
 
         // 默认搜索条件
-        order: "1:desc",
+        order: "1:asc",
         pageNo: 1,
         pageSize: 10,
       },
@@ -188,6 +183,12 @@ export default {
         categoryName,
         keyword,
       };
+      // 使用forEach(将对象属性转换为数组)循环对象,判断是否有空值,变为undefined.不传送,节省带宽.
+      Object.keys(searchParams).forEach((key)=>{
+        if(searchParams[key]===''){
+          delete searchParams[key];
+        }
+      })
       this.searchParams = searchParams;
     },
 
@@ -199,7 +200,7 @@ export default {
       this.searchParams.categoryName=undefined; // '' 空串也会被发送, 但是undefined不会发送请求
       // this.getSearchInfo();
       // 更新路径后删除相应参数 只保留了params参数
-      this.$router.push({name:'search', params:this.$route.params})
+      this.$router.replace({name:'search', params:this.$route.params})
     },
 
     // 删除关键字搜索条件,重新发送请求
@@ -207,7 +208,7 @@ export default {
       this.searchParams.keyword=undefined;
       this.$bus.$emit('clearKeyword');  // 通知header组件清除关键字
       // this.getSearchInfo();
-      this.$router.push({name:'search', query:this.$route.query})
+      this.$router.replace({name:'search', query:this.$route.query})
     },
 
     // 删除品牌,重新发请求
@@ -234,10 +235,36 @@ export default {
     removeProp(index){
       this.searchParams.props.splice(index, 1);
       this.getSearchInfo();
+    },
+    // 点击总和/排序链接的排序回调
+    changeSort(sortFlag){
+      // 用户点击的是否和原来的排序标志是否一样
+
+      // 获取原来的排序信息
+      let originSortFlag=this.sortFlag;
+      let originSortType=this.sortType;
+      let newOrder='';
+      // 判断用户点击的是否是原来的
+      if(sortFlag === originSortFlag){
+        // !originSortType
+        newOrder=`${originSortFlag}:${originSortType === 'asc'?'desc':'asc'}`
+      }else{
+        // 假设用户点击的排序标志和原来不一样,更新; 排序蜡型,默认.
+        newOrder=`${sortFlag}:desc`
+      }
+      this.searchParams.order=newOrder;
+      this.getSearchInfo();
     }
   },
   computed: {
     ...mapGetters(["goodsList"]),
+    // 优化sortFlag和sortType
+    sortFlag(){
+      return this.searchParams.order.split(':')[0];
+    },
+    sortType(){
+      return this.searchParams.order.split(':')[1];
+    }
   },
   watch: {
     $route() {

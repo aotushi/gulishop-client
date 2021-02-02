@@ -114,6 +114,9 @@ export default {
             bannerList: (state) => state.home.bannerList,
         }),
     },
+    destroy(){
+        console.log('destroy执行了')
+    }
 };
 </script>
 

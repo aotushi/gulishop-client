@@ -22,12 +22,18 @@ export default {
     name: "Home",
     components:{ListContainer, Recommend, Rank, Like, Floor, Brand},
     mounted(){
+        console.log('home组件挂载了')
         this.$store.dispatch('getFloorList')
     },
     computed:{
         ...mapState({
             floorList:state=>state.home.floorList
         })
+    },
+    watch:{
+        floorList(){
+            console.log('floorList变化了')
+        }
     }
 };
 </script>
