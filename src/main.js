@@ -7,11 +7,13 @@ import SlideLoop from '@/components/SlideLoop';
 import store from '@/store';
 import '@/mock/mockServer';  //引入mock接口
 import 'swiper/css/swiper.css';
+import Pagination from '@/components/Pagination';
 // import '@/api';
 
 //全局注册组件: 如果一个非路由组件被多个组件使用,那么定义在components,注册在全局
 Vue.component('TypeNav', TypeNav);
 Vue.component('SlideLoop', SlideLoop);
+Vue.component('Pagination', Pagination);
 
 Vue.config.productionTip =false;
 

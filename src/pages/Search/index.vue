@@ -88,35 +88,15 @@
             </ul>
           </div>
           <!-- 分页器 -->
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <!-- <div class="fr page"> -->
+           <Pagination 
+            :currentPageNo="searchParams.pageNo"
+            :total='searchInfo.total'
+            :pageSize="searchParams.pageSize"
+            :continueNo='5'
+            @changePageNo='changePageNo'
+           ></Pagination>
+          <!-- </div> -->
         </div>
       </div>
     </div>
@@ -124,7 +104,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import SearchSelector from "./SearchSelector/SearchSelector";
 export default {
   name: "Search",
@@ -146,8 +126,8 @@ export default {
 
         // 默认搜索条件
         order: "1:asc",
-        pageNo: 1,
-        pageSize: 10,
+        pageNo: 5,
+        pageSize: 3,
       },
     };
   },
@@ -199,6 +179,8 @@ export default {
       this.searchParams.category3Id=undefined;
       this.searchParams.categoryName=undefined; // '' 空串也会被发送, 但是undefined不会发送请求
       // this.getSearchInfo();
+      // 更新页码
+      this.searchParams.pageNo=1;
       // 更新路径后删除相应参数 只保留了params参数
       this.$router.replace({name:'search', params:this.$route.params})
     },
@@ -208,18 +190,24 @@ export default {
       this.searchParams.keyword=undefined;
       this.$bus.$emit('clearKeyword');  // 通知header组件清除关键字
       // this.getSearchInfo();
+      // 更新页码
+      this.searchParams.pageNo=1;
       this.$router.replace({name:'search', query:this.$route.query})
     },
 
     // 删除品牌,重新发请求
     removeTrademark(){
       this.searchParams.trademark=undefined;
+      // 更新页码
+      this.searchParams.pageNo=1;
       this.getSearchInfo();
     },
 
     // 用户点击品牌后,根据品牌搜索重新发请求
     searchForTrademark(trademark){
       this.searchParams.trademark=`${trademark.tmId}:${trademark.tmName}`
+      // 更新页码
+      this.searchParams.pageNo=1;
       this.getSearchInfo();
     },
 
@@ -229,11 +217,15 @@ export default {
       let isRepeate=this.searchParams.props.some(item=>item===prop);
       if(isRepeate){return};
       this.searchParams.props.push(prop);
+      // 更新页码
+      this.searchParams.pageNo=1;
       this.getSearchInfo();
     },
     // 用户点击删除属性后,重新发送请求
     removeProp(index){
       this.searchParams.props.splice(index, 1);
+      // 更新页码
+      this.searchParams.pageNo=1;
       this.getSearchInfo();
     },
     // 点击总和/排序链接的排序回调
@@ -254,10 +246,18 @@ export default {
       }
       this.searchParams.order=newOrder;
       this.getSearchInfo();
+    },
+    // 分页器点击切换页面的时候,触发的自定义事件
+    changePageNo(page){
+      this.searchParams.pageNo=page;
+      this.getSearchInfo();
     }
   },
   computed: {
     ...mapGetters(["goodsList"]),
+    ...mapState({
+      searchInfo:state=>state.search.searchInfo
+    }),
     // 优化sortFlag和sortType
     sortFlag(){
       return this.searchParams.order.split(':')[0];
@@ -270,7 +270,7 @@ export default {
     $route() {
       this.handlerSearchParams();
       this.getSearchInfo();
-    },
+    }
   },
 };
 </script>
