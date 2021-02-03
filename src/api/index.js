@@ -49,4 +49,20 @@ export const reqSearchInfo=(searchParams)=>{
         data:searchParams //用户搜索的参数,必须是一个对象,可以是空对象但必须传. 是用户发请求的时候给传递的
     })
 }
-// reqSearchInfo();
+
+// 详情页detail请求数据函数
+export const reqDetailInfo=(skuId)=>{
+    return request({
+        url:`/item/${ skuId }`,
+        method:'get'
+    })
+}
+
+// 请求添加购物车
+// cart/addToCart/{ skuId }/{ skuNum }
+export const reqAddOrUpdateShopCart=(skuId, skuNum)=>{
+    return request({
+        url:`/cart/cartList/${skuId}/${skuNum}`,
+        method:'post'
+    })
+}

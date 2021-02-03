@@ -2,11 +2,8 @@
 //2.引入并声明使用插件
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import routes from './routes';
 
-import Home from '@/pages/Home';
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
-import Search from '@/pages/Search';
 Vue.use(VueRouter);
 
 //将原有的push方法地址,保存起来,后期还能拿到原来的
@@ -35,36 +32,12 @@ VueRouter.prototype.replace=function(location,onResolve,onRejected){
 }
 
 const router=new VueRouter({
-    routes:[
-        {
-            path:'/home',
-            component:Home
-        },
-        {
-            name:'search',
-            path:'/search/:keyword?',
-            component:Search,
-            meta:{
-                isHidden:false
-            }
-        },
-        {
-            path:'/login',
-            component:Login,
-            meta:{
-                isHidden:false
-            }
-        },
-        {
-            path:'/register',
-            component:Register
-        },
-        {
-            path:'/',
-            redirect:'/home'
-        }
-    ]
+    routes,
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+      }
 })
+
 
 //3.向外暴露一个路由器对象
 export default router;
