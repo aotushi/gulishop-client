@@ -6,11 +6,16 @@ import Register from '@/pages/Register';
 import Search from '@/pages/Search';
 import Detail from '@/pages/Detail';
 import Addcartsuccess from '@/pages/Addcartsuccess';
+import ShopCart from '@/pages/ShopCart';
 
 export default [
             {
                 path:'/home',
                 component:Home
+            },
+            {
+                path:'/shopcart',
+                component:ShopCart
             },
             {
                 path:'/addcartsuccess',

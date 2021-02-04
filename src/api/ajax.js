@@ -2,6 +2,7 @@
 import axios from 'axios';
 import NProgress  from 'nprogress';
 import "nprogress/nprogress.css";
+import store from '@/store';
 
 // 1.配置基础路径和超时限制
 // create()方法创建一个新的和axios具有相同功能的一个实例
@@ -17,9 +18,15 @@ service.interceptors.request.use(
     (config)=>{
     //config是我们的请求报文,最后需要返回去.
     NProgress.start(); //开启进度条
+
+    // 请求头内部需要添加临时标识,后期每个请求都会带上这个临时标识
+    let userTempId = store.state.user.userTempId;
+    if(userTempId){
+        config.headers.userTempId = userTempId;
+    }
     return config;
 
-},()=>{}); //请求拦截器中失败的回调一般书写. 
+},()=>{}); //请求拦截器中失败的回调一般不写. 
 
 service.interceptors.response.use(
     (response)=>{
@@ -30,7 +37,7 @@ service.interceptors.response.use(
     }, 
     (error)=>{
         NProgress.done();
-        alert('请求失败'+error.message||'未知错误');
+        alert('ajax请求失败'+error.message||'未知错误');
         return new Promise(()=>{}) //后面继续处理这个错误,返回错误的promise
         // return Promise.reject(new Error('发送请求失败')) //返回pending状态的promise,终端promise链,没有下文
     }

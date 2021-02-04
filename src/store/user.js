@@ -1,6 +1,10 @@
 //user模块对应的vuex模块
+
+import {getUserTempId} from '@/utils/userabout';
 const state={
     //存数据
+    // 这个函数就是用来专门生成用户的临时标识
+    userTempId:getUserTempId()
 };
 
 const mutations={
