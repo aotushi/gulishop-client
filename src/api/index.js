@@ -87,4 +87,35 @@ export const reqUpdateCartIsCheck=(skuId, isChecked)=>{
 }
 
 
+// 请求删除购物车数据 
+// /api/cart/deleteCart/{skuId} delete
 
+export const reqDeleteShopCart = (skuId)=>{
+    return request({
+        url:`/cart/deleteCart/${skuId}`,
+        method:"delete"
+    })
+}
+
+// 请求注册用户
+// /api/user/passport/register post
+// 参数路径里没有,使用请求体参数
+
+export const reqUserRegister=(userInfo)=>{
+    console.log('ccc')
+    return request({
+        url:'/user/passport/register',
+        method:'post',
+        data:userInfo
+    })
+}
+
+// 获取验证码
+// api/user/passport/sendCode/{phone}  get
+
+export const reqGetCode=(phone)=>{
+    return request({
+        url:`/user/passport/sendCode/${phone}`,
+        method:'get'
+    })
+}

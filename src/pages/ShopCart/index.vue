@@ -34,7 +34,7 @@
             <span class="sum">{{cart.skuPrice * cart.skuNum}}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a href="#none" class="sindelet" @click="deleteShopCart(cart)">删除</a>
             <br>
             <a href="#none">移到收藏</a>
           </li>
@@ -115,6 +115,16 @@ import { mapGetters, mapState } from 'vuex';
           this.getShopCartInfo();
         } catch (error) {
           alert(error.message);
+        }
+      },
+      // 删除单个购物车数据
+      async deleteShopCart(cart){
+        try {
+          await this.$store.dispatch('deleteShopCart', cart.skuId);
+          alert('删除单个商品修改成功');
+          this.getShopCartInfo();
+        } catch (error) {
+          alert(error.message)
         }
       }
     },

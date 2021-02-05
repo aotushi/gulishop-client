@@ -138,7 +138,7 @@ export default {
       },
     };
   },
-  // 安装分类名称和关键字进行搜索
+  // 按照分类名称和关键字进行搜索
   beforeMount() {
     this.handlerSearchParams();
   },

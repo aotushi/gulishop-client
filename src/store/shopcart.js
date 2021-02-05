@@ -1,4 +1,4 @@
-import { reqAddOrUpdateShopCart, reqShopCartInfo, reqUpdateCartIsCheck } from '@/api'
+import { reqAddOrUpdateShopCart, reqShopCartInfo, reqUpdateCartIsCheck, reqDeleteShopCart } from '@/api'
 
 
 
@@ -57,6 +57,16 @@ const actions={
         promises.push(promise)
       });
       return Promise.all(promises);
+    },
+
+    // 删除单个
+    async deleteShopCart({commit}, skuId){
+        const result = await reqDeleteShopCart(skuId)
+        if(result.code === 200){
+          return 'ok'
+        }else{
+          return Promise.reject(new Error('failed'));
+        }
     }
 };
 

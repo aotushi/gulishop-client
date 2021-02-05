@@ -26,7 +26,12 @@ service.interceptors.request.use(
     }
     return config;
 
-},()=>{}); //请求拦截器中失败的回调一般不写. 
+},
+    //请求拦截器中失败的回调一般不写. 
+    (error)=>{
+        alerot(error.message)
+    }  
+ ); 
 
 service.interceptors.response.use(
     (response)=>{
