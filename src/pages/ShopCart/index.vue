@@ -34,9 +34,9 @@
             <span class="sum">{{cart.skuPrice * cart.skuNum}}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet" @click="deleteShopCart(cart)">删除</a>
+            <a href="javascript:;" class="sindelet" @click="deleteShopCart(cart)">删除</a>
             <br>
-            <a href="#none">移到收藏</a>
+            <a href="javascript:;">移到收藏</a>
           </li>
         </ul>
       </div>
@@ -47,9 +47,9 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
-        <a href="#none">移到我的关注</a>
-        <a href="#none">清除下柜商品</a>
+        <a href="javascript:;" @click="deleteAll">删除选中的商品</a>
+        <a href="javascript:;">移到我的关注</a>
+        <a href="javascript:;">清除下柜商品</a>
       </div>
       <div class="money-box">
         <div class="chosed">已选择
@@ -107,7 +107,7 @@ import { mapGetters, mapState } from 'vuex';
             }   
       },
 
-      // 更新商品的选框
+      // 更新商品的复选框
       async updateCartIsCheck(skuId, isChecked){
         try {
           await this.$store.dispatch('updateCartIsCheck', {skuId, isChecked:isChecked?0:1});
@@ -126,6 +126,16 @@ import { mapGetters, mapState } from 'vuex';
         } catch (error) {
           alert(error.message)
         }
+      },
+      // 删除多个购物车数据
+      async deleteAll(){
+            try {
+            await this.$store.dispatch('deleteAllShopCart');
+            alert('删除多个商品成功');
+            this.getShopCartInfo();
+          } catch (error) {
+            alert('失败原因: ['+error.message+']')
+          }
       }
     },
     computed:{

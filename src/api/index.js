@@ -102,7 +102,6 @@ export const reqDeleteShopCart = (skuId)=>{
 // 参数路径里没有,使用请求体参数
 
 export const reqUserRegister=(userInfo)=>{
-    console.log('ccc')
     return request({
         url:'/user/passport/register',
         method:'post',
@@ -116,6 +115,47 @@ export const reqUserRegister=(userInfo)=>{
 export const reqGetCode=(phone)=>{
     return request({
         url:`/user/passport/sendCode/${phone}`,
+        method:'get'
+    })
+}
+
+// 请求用户登录
+// /api/user/passport/login post
+// 返回内容. 但是不严谨,登录以后应只返回token数据,其他用户数据应重新根据token发请求获取
+// {
+//     code: 200
+//     message: "成功"
+//     data:{
+//     nickName:"Administrator",
+//     name:"Admin",
+//     token: 90aa16f24d04c7d882051412f9ec45b"
+//     }
+//     ok: true 
+//     }
+// }   
+
+export const reqUserLogin=(userInfo)=>{
+    return request({
+        url:'/user/passport/login',
+        method:'post',
+        data:userInfo
+    })
+}
+
+// 根据token请求获取用户的信息
+// /api/user/passport/auth/getUserInfo
+// 参数是token已经在请求头中添加
+export const reqGetUserInfo=()=>{
+    return request({
+        url:"/user/passport/auth/getUserInfo",
+        method:'get'
+    })
+}
+// 请求退出登录
+// /api/user/passport/logout get
+export const reqUserLogout=()=>{
+    return request({
+        url:'/user/passport/logout',
         method:'get'
     })
 }

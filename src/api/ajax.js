@@ -24,12 +24,18 @@ service.interceptors.request.use(
     if(userTempId){
         config.headers.userTempId = userTempId;
     }
+
+    // 登录成功后,需要把token添加到请求头当中. 今后所有的请求
+    let token=store.state.user.token;
+    if(token){
+        config.headers.token = token;
+    }
     return config;
 
 },
     //请求拦截器中失败的回调一般不写. 
     (error)=>{
-        alerot(error.message)
+        alert(error.message)
     }  
  ); 
 

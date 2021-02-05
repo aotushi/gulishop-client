@@ -45,7 +45,7 @@ const actions={
       }
     },
 
-    // 点击多选框.实现全选/全不选  两种解决方案:1.一次性修改多个接口 2.使用单次修改的接口
+    // 点击多选框.实现全选/全不选  两种解决方案:1.一次性修改多个接口 2.多次使用单次修改的接口
     updateCartIsCheckAll({dispatch, commit, getters}, isChecked){
       let promises=[];
       // 获取购物车列表数据 getters.cartInfo.cartInfoList
@@ -60,13 +60,28 @@ const actions={
     },
 
     // 删除单个
-    async deleteShopCart({commit}, skuId){
+    async deleteShopCart({commit,dispatch}, skuId){
         const result = await reqDeleteShopCart(skuId)
         if(result.code === 200){
+          // 点击'删除'文字, dispatch总的复选框的action
+          dispatch('updateCartIsCheckAll')
           return 'ok'
         }else{
           return Promise.reject(new Error('failed'));
         }
+    },
+    // 删除多个商品
+    deleteAllShopCart({commit, getters, dispatch}){
+      let promises=[];
+      getters.cartInfo.cartInfoList.forEach((item)=>{
+
+          if(item.isChecked){
+            let promise = dispatch('deleteShopCart', item.skuId);
+            promises.push(promise);
+          }
+        }
+      )
+      return promises;
     }
 };
 
