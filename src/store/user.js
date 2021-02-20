@@ -1,7 +1,7 @@
 //user模块对应的vuex模块
 
 import {getUserTempId} from '@/utils/userabout';
-import {reqGetCode, reqGetUserInfo, reqUserLogin, reqUserLogout, reqUserRegister} from '@/api';
+import {reqGetCode, reqGetUserInfo, reqUserAddressList, reqUserLogin, reqUserLogout, reqUserRegister} from '@/api';
 const state={
     //存数据
     // 这个函数就是用来专门生成用户的临时标识
@@ -12,7 +12,8 @@ const state={
     token: localStorage.getItem('TOKEN_KEY'), //自动登录从localStorage获取.拿到就不需要请求
 
     // 根据token获取用户信息
-    userInfo:{}
+    userInfo:{},
+    userAddressList:[]
 };
 
 const mutations={
@@ -35,6 +36,10 @@ const mutations={
     RESET_USER(state){
         state.token='';
         state.userInfo={}
+    },
+
+    RECEIVE_USERADDRESSLIST(state, userAddressList){
+        state.userAddressList = userAddressList
     }
 
 };
@@ -100,6 +105,14 @@ const actions={
             return 'ok';
         }else{
             return Promise.reject(result)
+        }
+    },
+
+    // 用户地址信息
+    async getUserAddressList({commit}){
+        const result = await reqUserAddressList();
+        if(result.code === 200){
+            commit('RECEIVE_USERADDRESSLIST', result.data);
         }
     }
 };

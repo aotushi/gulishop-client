@@ -7,6 +7,7 @@ import user from './user';
 import search from './search';
 import detail from './detail';
 import shopcart from './shopcart';
+import trade from './trade';
 
 const state={
     //存数据
@@ -38,6 +39,7 @@ const store=new Vuex.Store({
         search,
         detail,
         shopcart,
+        trade
     }
 });
 

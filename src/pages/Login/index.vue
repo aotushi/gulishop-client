@@ -78,12 +78,12 @@
       async login(){
         let {phone, password} = this;
         if(phone && password){
-            try {
-            await this.$store.dispatch('userLogin',{phone, password});
-            alert('登录成功, 去首页');
-            this.$router.push('/home');
+              try {
+              await this.$store.dispatch('userLogin',{phone, password});
+              alert('登录成功, 去首页');
+              this.$router.push('/home');
           } catch (error) {
-            alert('失败原因 ['+error.message+']')
+              alert('失败原因 ['+error.message+']')
           }
         }
       }
