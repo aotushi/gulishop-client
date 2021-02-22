@@ -11,6 +11,16 @@ import Pagination from '@/components/Pagination';
 import '@/api';
 import * as API from '@/api';
 import {Button, MessageBox, Message } from 'element-ui';
+import '@/utils/validate'; //引入vee-validate相关配置
+
+import VueLazyload from 'vue-lazyload'
+import loading from '@/assets/images/loading.gif'
+// 在图片界面没有进入到可视范围前不加载, 在没有得到图片前先显示loading图片
+Vue.use(VueLazyload, { // 内部自定义了一个指令lazy
+  loading,  // 指定未加载得到图片之前的loading图片
+})
+
+
 
 //全局注册组件: 如果一个非路由组件被多个组件使用,那么定义在components,注册在全局
 Vue.component('TypeNav', TypeNav);

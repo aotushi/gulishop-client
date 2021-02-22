@@ -1,6 +1,8 @@
 // router模块
 
-import Home from '@/pages/Home';
+// import Home from '@/pages/Home';  同步引入
+const Home=()=>import('@/pages/Home')  //动态引入 import函数可以让文件单独打包,并且动态加载
+
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Search from '@/pages/Search';
@@ -75,7 +77,7 @@ export default [
     },
     {
         path: '/home',
-        component: Home
+        component: Home  //component后面可以是组件也可是函数  用户第一次访问home组件,就会加载函数
     },
     {
         path: '/shopcart',

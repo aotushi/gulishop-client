@@ -97,7 +97,7 @@
 										<router-link
 											:to="'/detail/' + goods.id"
 										>
-											<img :src="goods.defaultImg" />
+											<img v-lazy="goods.defaultImg" />
 										</router-link>
 									</div>
 									<div class="price">
