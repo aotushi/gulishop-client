@@ -18,7 +18,9 @@ Vue.component('SlideLoop', SlideLoop);
 Vue.component('Pagination', Pagination);
 
 // element-ui 两种组件引入方式
+// 第一种类似Button, 可以引入全局注册,使用时直接写标签; 第二种类似messagebox, 引入后不能直接使用,而是挂载再Vue原型上,使用时用js代码使用
 Vue.component(Button.name, Button);
+// 或 Vue.use(Button);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$message = Message;

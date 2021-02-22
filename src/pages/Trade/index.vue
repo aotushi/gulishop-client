@@ -118,6 +118,16 @@
 import { mapGetters, mapState } from "vuex";
 export default {
 	name: "Trade",
+	// 组件内守卫
+	beforeRouteEnter: (to, from, next) => {
+        // ...
+		if(from.path === '/shopcart'){
+			next();
+		}else{
+			alert('只有从购物车界面才能跳转到交易页面');
+			next(false);
+		}
+      },
 	data() {
 		return {
 			// 用户输入的留言信息
